@@ -4,105 +4,92 @@
 
 // Shortcuts --------------------------------
 
-.border-radius(@radius:5px) {
-    -webkit-border-radius: @arguments;
-	-moz-border-radius: @arguments;
-	border-radius: @arguments;
+@mixin border-radius($radius:5px) {
+    -webkit-border-radius: $radius;
+	-moz-border-radius: $radius;
+	border-radius: $radius;
 }
 
-.box-sizing(@type: border-box) {
-	-moz-box-sizing: @type;
-	-webkit-box-sizing: @type;
-	-ms-box-sizing: @type;
-	box-sizing: @type;
+@mixin box-sizing($type: border-box) {
+	-moz-box-sizing: $type;
+	-webkit-box-sizing: $type;
+	-ms-box-sizing: $type;
+	box-sizing: $type;
 }
 
-.box-shadow(@shadow: 1px 1px 2px rgba(0,0,0,0.25)) {
-	-webkit-box-shadow: @shadow;
-	-moz-box-shadow: @shadow;
-	box-shadow: @shadow;
+@mixin box-shadow($shadow: 1px 1px 2px rgba(0,0,0,0.25)) {
+	-webkit-box-shadow: $shadow;
+	-moz-box-shadow: $shadow;
+	box-shadow: $shadow;
 }
 
-.transition(@transition) {
-	-webkit-transition: @transition;
-	-moz-transition: @transition;
-	transition: @transition;
+@mixin transition($transition) {
+	-webkit-transition: $transition;
+	-moz-transition: $transition;
+	transition: $transition;
 }
 
-.rotate(@rotation) {
-	-webkit-transform: rotate(@rotation);
-	-moz-transform: rotate(@rotation);
-	-o-transform: rotate(@rotation);
-	transform: rotate(@rotation);
+@mixin rotate(rotation) {
+	-webkit-transform: rotate($rotation);
+	-moz-transform: rotate($rotation);
+	-o-transform: rotate($rotation);
+	transform: rotate($rotation);
 }
 
-.placeholder(@color: #DDD) {
+@function placeholder($color: #DDD) {
 	:-moz-placeholder {
-		color: @color;
+		color: $color;
 	}
 	::-webkit-input-placeholder {
-		color: @color;
+		color: $color;
 	}
 }
 
-#gradient {
-	.horizontal (@start-color, @end-color) when not (@disable-filters) {
-		background-color: @end-color;
+@mixin gradient($orientation, $start-color, $end-color) {
+
+	@if $orientation == 'horizontal' {
+		background-color: $end-color;
 		background-repeat: repeat-x;
-		background-image: -khtml-gradient(linear, left top, right top, from(@start-color), to(@end-color)); /* Konqueror */
-		background-image: -moz-linear-gradient(left, @start-color, @end-color); /* FF 3.6+ */
-		background-image: -ms-linear-gradient(left, @start-color, @end-color); /* IE10 */
-		background-image: -webkit-gradient(linear, left top, right top, color-stop(0%, @start-color), color-stop(100%, @end-color)); /* Safari 4+, Chrome 2+ */
-		background-image: -webkit-linear-gradient(left, @start-color, @end-color); /* Safari 5.1+, Chrome 10+ */
-		background-image: -o-linear-gradient(left, @start-color, @end-color); /* Opera 11.10 */
-		background-image: -ms-linear-gradient(left, @start-color 0%, @end-color 100%);  /* IE10+ */
-		background-image: linear-gradient(left, @start-color, @end-color); /* the standard */
-		filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",@start-color,@end-color)); /* IE6 & IE7 */
-		-ms-filter: %("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",@start-color,@end-color); /* IE8+ */
+		background-image: -khtml-gradient(linear, left top, right top, from($start-color), to($end-color)); /* Konqueror */
+		background-image: -moz-linear-gradient(left, $start-color, $end-color); /* FF 3.6+ */
+		background-image: -ms-linear-gradient(left, $start-color, $end-color); /* IE10 */
+		background-image: -webkit-gradient(linear, left top, right top, color-stop(0%, $start-color), color-stop(100%, $end-color)); /* Safari 4+, Chrome 2+ */
+		background-image: -webkit-linear-gradient(left, $start-color, $end-color); /* Safari 5.1+, Chrome 10+ */
+		background-image: -o-linear-gradient(left, $start-color, $end-color); /* Opera 11.10 */
+		background-image: -ms-linear-gradient(left, $start-color 0%, $end-color 100%);  /* IE10+ */
+		background-image: linear-gradient(left, $start-color, $end-color); /* the standard */
+
+		@if $disable-filters == false {
+			filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",$start-color,$end-color)); /* IE6 & IE7 */
+			-ms-filter: %("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",$start-color,$end-color); /* IE8+ */			
+		}
+		
 	}
-	.horizontal (@start-color, @end-color) when (@disable-filters) {
-		background-color: @end-color;
+
+	@if $orientation == 'vertical' {
+		background-color: $end-color;
 		background-repeat: repeat-x;
-		background-image: -khtml-gradient(linear, left top, right top, from(@start-color), to(@end-color)); /* Konqueror */
-		background-image: -moz-linear-gradient(left, @start-color, @end-color); /* FF 3.6+ */
-		background-image: -ms-linear-gradient(left, @start-color, @end-color); /* IE10 */
-		background-image: -webkit-gradient(linear, left top, right top, color-stop(0%, @start-color), color-stop(100%, @end-color)); /* Safari 4+, Chrome 2+ */
-		background-image: -webkit-linear-gradient(left, @start-color, @end-color); /* Safari 5.1+, Chrome 10+ */
-		background-image: -o-linear-gradient(left, @start-color, @end-color); /* Opera 11.10 */
-		background-image: -ms-linear-gradient(left, @start-color 0%, @end-color 100%);  /* IE10+ */
-		background-image: linear-gradient(left, @start-color, @end-color); /* the standard */
+		background-image: -khtml-gradient(linear, left top, left bottom, from($start-color), to($end-color)); /* Konqueror */
+		background-image: -moz-linear-gradient($start-color, $end-color); /* FF 3.6+ */
+		background-image: -ms-linear-gradient($start-color, $end-color); /* IE10 */
+		background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $start-color), color-stop(100%, $end-color)); /* Safari 4+, Chrome 2+ */
+		background-image: -webkit-linear-gradient($start-color, $end-color); /* Safari 5.1+, Chrome 10+ */
+		background-image: -o-linear-gradient($start-color, $end-color); /* Opera 11.10 */
+		background-image: -ms-linear-gradient(top, $start-color 0%, $end-color 100%);  /* IE10+ */
+		background-image: linear-gradient($start-color, $end-color); /* the standard */
+
+		@if $disable-filters == false {
+			filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@start-color,@end-color)); /* IE6 & IE7 */
+			-ms-filter: %("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@start-color,@end-color); /* IE8+ */
+		}
+
 	}
-	.vertical (@start-color, @end-color) when (@disable-filters)  {
-		background-color: @end-color;
-		background-repeat: repeat-x;
-		background-image: -khtml-gradient(linear, left top, left bottom, from(@start-color), to(@end-color)); /* Konqueror */
-		background-image: -moz-linear-gradient(@start-color, @end-color); /* FF 3.6+ */
-		background-image: -ms-linear-gradient(@start-color, @end-color); /* IE10 */
-		background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, @start-color), color-stop(100%, @end-color)); /* Safari 4+, Chrome 2+ */
-		background-image: -webkit-linear-gradient(@start-color, @end-color); /* Safari 5.1+, Chrome 10+ */
-		background-image: -o-linear-gradient(@start-color, @end-color); /* Opera 11.10 */
-		background-image: -ms-linear-gradient(top, @start-color 0%, @end-color 100%);  /* IE10+ */
-		background-image: linear-gradient(@start-color, @end-color); /* the standard */
-	}
-	.vertical (@start-color, @end-color) when not (@disable-filters)  {
-		background-color: @end-color;
-		background-repeat: repeat-x;
-		background-image: -khtml-gradient(linear, left top, left bottom, from(@start-color), to(@end-color)); /* Konqueror */
-		background-image: -moz-linear-gradient(@start-color, @end-color); /* FF 3.6+ */
-		background-image: -ms-linear-gradient(@start-color, @end-color); /* IE10 */
-		background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, @start-color), color-stop(100%, @end-color)); /* Safari 4+, Chrome 2+ */
-		background-image: -webkit-linear-gradient(@start-color, @end-color); /* Safari 5.1+, Chrome 10+ */
-		background-image: -o-linear-gradient(@start-color, @end-color); /* Opera 11.10 */
-		background-image: -ms-linear-gradient(top, @start-color 0%, @end-color 100%);  /* IE10+ */
-		background-image: linear-gradient(@start-color, @end-color); /* the standard */
-		filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@start-color,@end-color)); /* IE6 & IE7 */
-		-ms-filter: %("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@start-color,@end-color); /* IE8+ */
-	}
+	
 }
 
 // Helpers --------------------------------
 
-.clearfix() when not (@using-ieclasses) {
+@mixin clearfix() {
 	&:before,
 	&:after {
 	    content: "";
@@ -111,38 +98,31 @@
 	&:after {
 	    clear: both;
 	}
-	*zoom: 1;
-}
-
-.clearfix() when (@using-ieclasses) {
-	&:before,
-	&:after {
-	    content: "";
-	    display: table;
-	}
-	&:after {
-	    clear: both;
-	}
-	.ie6 &, .ie7 & {
-		zoom: 1;
+	@if $using-ieclasses == true {
+		.ie6 &, .ie7 & {
+			zoom: 1;
+		}
+	@if $using-ieclasses == false {
+		*zoom: 1;
 	}
 }
 
-.inline-block() when (@using-ieclasses) {
-	display: inline-block;
-	.ie7 & {
-		display: inline;
-		zoom: 1;
+@mixin inline-block() {
+	@if $using-ieclasses == true {
+		display: inline-block;
+		.ie7 & {
+			display: inline;
+			zoom: 1;
+		}
+
+	@if$using-ieclasses == false {
+		display: inline-block;
+		*display: inline;
+		*zoom: 1;
 	}
 }
 
-.inline-block() when not (@using-ieclasses) {
-	display: inline-block;
-	*display: inline;
-	*zoom: 1;
-}
-
-.ir() {
+@mixin ir() {
 	border: 0;
 	font: 0/0 a;
 	text-shadow: none;
@@ -150,12 +130,12 @@
 	background-color: transparent;
 }
 
-.hidden() {
+@mixin hidden() {
 	display: none !important;
 	visibility: hidden;
 }
 
-.visually-hidden() {
+@mixin visually-hidden {
 	border: 0;
 	clip: rect(0 0 0 0);
 	height: 1px;
@@ -175,23 +155,42 @@
 	}
 }
 
-.size(@thesize) {
-	width: @thesize;
-	height: @thesize;
+@mixin size($thesize: 0, $width: 0, $height: 0) {
+	
+	@if $thesize == 0 {
+		width: $width;
+		height: $height;
+	}
+	@if $thesize > 0 {
+		width: $thesize;
+		height: $thesize;
+	}
+
 }
 
-.size(@width, @height) {
-	width: @width;
-	height: @height;
-}
 
 // System --------------------------------
 
-.nudge-l( @pos ) when ( @pos = 0 ) {}
-.nudge-l( @pos ) when not ( @pos = 0 ) { left: @pos; }
-.nudge-r( @pos ) when ( @pos = 0 ) {}
-.nudge-r( @pos ) when not ( @pos = 0 ) { right: @pos; }
-.nudge-t( @pos ) when ( @pos = 0 ) {}
-.nudge-t( @pos ) when not ( @pos = 0 ) { top: @pos; }
-.nudge-b( @pos ) when ( @pos = 0 ) {}
-.nudge-b( @pos ) when not ( @pos = 0 ) { bottom: @pos; }
+@function nudge-l($pos) {
+	@if $pos > 0 {
+		left: $pos;
+	}
+}
+
+@function nudge-r($pos) {
+	@if $pos > 0 {
+		right: $pos;
+	}
+}
+
+@function nudge-t($pos) {
+	@if $pos > 0 {
+		top: $pos;
+	}
+}
+
+@function nudge-b($pos) {
+	@if $pos > 0 {
+		bottom: $pos;
+	}
+}
