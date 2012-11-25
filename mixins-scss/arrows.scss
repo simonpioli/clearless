@@ -2,19 +2,19 @@
 	width: 0;
 	height: 0;
 	border: $size solid transparent;
-	_abbor_el( $pos, $bg-color );
+	@include _abbor_el($pos, $bg-color);
 }
 
 @mixin arrowbox($pos, $size, $bg-color, $offset:50%) {
 
-	$after-margin = $size * -1px;
+	$after-margin: $size * -1px;
 	
 	position: relative;
 	background: $bg-color;
 	
 	&:after,
 	&:before {
-		_abpos($pos);
+		@include _abpos($pos);
 		border: solid transparent;
 		content: " ";
 		height: 0;
@@ -25,59 +25,59 @@
 
 	&:after {
 		border-color: transparent;
-		_abbor_el($pos, $bg-color);
+		@include _abbor_el($pos, $bg-color);
 		border-width: $size;
-		_abpos_el($pos, $size, $offset);
-		_abmar_el($pos, $after-margin);
+		@include _abpos_el($pos, $size, $offset);
+		@include _abmar_el($pos, $after-margin);
 	}
 
 }
 
 @mixin arrowbox($pos, $size, $bg-color, $border-width, $border-color, $offset:50%) {
 
-	$before-margin = ($size + round($border-width * 1.41421356)) * -1px;
+	$before-margin: ($size + round($border-width * 1.41421356)) * -1px;
 	
-	arrowbox($pos, $size, $bg-color, $offset);
+	@include arrowbox($pos, $size, $bg-color, $offset);
 	
 	border: $border-width solid $border-color;
 	
 	&:before {
 		border-color: transparent;
-		_abbor_el($pos, $border-color);
+		@include _abbor_el($pos, $border-color);
 		border-width: $before-margin * -1;
-		_abpos_el($pos, $size, $offset);
-		_abmar_el($pos, $before-margin);
+		@include _abpos_el($pos, $size, $offset);
+		@include _abmar_el($pos, $before-margin);
 	}
 
 }
 
-@function _abpos( $pos ){
+@mixin _abpos($pos){
 	@if $pos == left {
-		@return right: 100;
+		right: 100;
 	}
 	@if $pos == right {
-		@return left: 100%;
+		left: 100%;
 	}
 	@if $pos == up {
-		@return bottom: 100%;
+		bottom: 100%;
 	}
 	@if $pos == down {
-		@return top: 100%;
+		top: 100%;
 	}
 }
 
 
 
-@function _abpos_el($pos, $size, $offset) {
+@mixin _abpos_el($pos, $size, $offset) {
 
-	// Surely we don't need 12 lines of the same thing to acomplish 6 in an if statement.
+	// Surely we don't need 12 lines of the same thing to acomplish 6 in a couple of if statements.
 	// I'm not sure it'll do any harm to pass offset and add it to size even if it isn't a pixel value... To test...
 
 	@if $pos == left or $pos == right {
-		@return top: $offset + $size;
+		top: $offset + $size;
 	}
 	@if $pos == up or $pos == down {
-		@return left: $offset + $size;
+		left: $offset + $size;
 	}
 
 	/* In case we need to split the maths based on $offset value
@@ -101,26 +101,26 @@
 
 }
 
-@function _abbor_el($pos, $color) {
+@mixin _abbor_el($pos, $color) {
 	@if $pos == left {
-		@return border-right-color: $color;
+		border-right-color: $color;
 	}
 	@if $pos == right {
-		@return border-left-color: $color;
+		border-left-color: $color;
 	}
 	@if $pos == up {
-		@return border-bottom-color: $color;
+		border-bottom-color: $color;
 	}
 	@if $pos == down {
-		@return border-top-color: $color;
+		border-top-color: $color;
 	}
 }
 
-@function _abmar_el($pos, $margin) {
+@mixin _abmar_el($pos, $margin) {
 	@if $pos == left or $pos == right {
-		@return margin-top: $margin;
+		margin-top: $margin;
 	}
 	@if $pos == up or $pos == down {
-		@return margin-left: $margin;
+		margin-left: $margin;
 	}
 }
