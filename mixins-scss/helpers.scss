@@ -171,26 +171,26 @@
 
 // System --------------------------------
 
-@mixin nudge-l($pos) {
+@function nudge-l($pos) {
 	@if $pos > 0 {
-		left: $pos;
+		@return left: $pos;
 	}
 }
 
-@mixin nudge-r($pos) {
+@function nudge-r($pos) {
 	@if $pos > 0 {
-		right: $pos;
+		@return right: $pos;
 	}
 }
 
-@mixin nudge-t($pos) {
+@function nudge-t($pos) {
 	@if $pos > 0 {
-		top: $pos;
+		@return top: $pos;
 	}
 }
 
-@mixin nudge-b($pos) {
+@function nudge-b($pos) {
 	@if $pos > 0 {
-		bottom: $pos;
+		@return bottom: $pos;
 	}
 }
