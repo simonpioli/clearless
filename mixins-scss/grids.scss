@@ -3,30 +3,30 @@
 // ==============================================
 
 // You shouldn't need to touch this! Internal use only.
-@grid-width: (@column-width*@total-columns) + (@gutter-width*(@total-columns - 1));
+$grid-width: ($column-width*$total-columns) + ($gutter-width*($total-columns - 1));
 
-.column-wrapper() {
+@mixin column-wrapper() {
 	width: 100%;
 }
 
-.inline-column-wrapper() when not (@using-ieclasses) {
-    letter-spacing: -0.31em;
-    *letter-spacing: normal;
+@mixin inline-column-wrapper() {
     word-spacing: -0.43em;
+    letter-spacing: -0.31em;
+    
+    @if $using-ieclasses {
+    	.ie7 & {
+			letter-spacing: normal;
+		}
+    }
+
+    @if not $using-ieclasses {
+    	*letter-spacing: normal;
+    }
 }
 
-.inline-column-wrapper() when (@using-ieclasses) {
-    letter-spacing: -0.31em;
-    word-spacing: -0.43em;
-	.ie7 & {
-		letter-spacing: normal;
-	}
-}
-
-
-.column() {
+@mixin column() {
 	float: left;
-	.column-gutter();
+	@include column-gutter();
 }
 
 .column( @span ) when (@span = false) {

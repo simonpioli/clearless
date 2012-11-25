@@ -29,7 +29,7 @@
 	transition: $transition;
 }
 
-@mixin rotate(rotation) {
+@mixin rotate($rotation) {
 	-webkit-transform: rotate($rotation);
 	-moz-transform: rotate($rotation);
 	-o-transform: rotate($rotation);
@@ -60,8 +60,8 @@
 		background-image: linear-gradient(left, $start-color, $end-color); /* the standard */
 
 		@if not $disable-filters {
-			filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",$start-color,$end-color)); /* IE6 & IE7 */
-			-ms-filter: %("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",$start-color,$end-color); /* IE8+ */			
+			filter: e(("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",$start-color,$end-color)); /* IE6 & IE7 */
+			-ms-filter: ("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",$start-color,$end-color); /* IE8+ */			
 		}
 		
 	}
@@ -78,9 +78,9 @@
 		background-image: -ms-linear-gradient(top, $start-color 0%, $end-color 100%);  /* IE10+ */
 		background-image: linear-gradient($start-color, $end-color); /* the standard */
 
-		@if $disable-filters == false {
-			filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@start-color,@end-color)); /* IE6 & IE7 */
-			-ms-filter: %("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@start-color,@end-color); /* IE8+ */
+		@if not $disable-filters {
+			filter: e(("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",$start-color,$end-color)); /* IE6 & IE7 */
+			-ms-filter: ("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",$start-color,$end-color); /* IE8+ */
 		}
 
 	}
@@ -102,6 +102,7 @@
 		.ie6 &, .ie7 & {
 			zoom: 1;
 		}
+	}
 	@if $using-ieclasses == false {
 		*zoom: 1;
 	}
@@ -114,7 +115,7 @@
 			display: inline;
 			zoom: 1;
 		}
-
+	}
 	@if not $using-ieclasses {
 		display: inline-block;
 		*display: inline;
@@ -171,26 +172,26 @@
 
 // System --------------------------------
 
-@function nudge-l($pos) {
+@mixin nudge-l($pos) {
 	@if $pos > 0 {
-		@return left: $pos;
+		left: $pos;
 	}
 }
 
-@function nudge-r($pos) {
+@mixin nudge-r($pos) {
 	@if $pos > 0 {
-		@return right: $pos;
+		right: $pos;
 	}
 }
 
-@function nudge-t($pos) {
+@mixin nudge-t($pos) {
 	@if $pos > 0 {
-		@return top: $pos;
+		top: $pos;
 	}
 }
 
-@function nudge-b($pos) {
+@mixin nudge-b($pos) {
 	@if $pos > 0 {
-		@return bottom: $pos;
+		bottom: $pos;
 	}
 }
