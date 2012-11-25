@@ -36,7 +36,7 @@
 	transform: rotate($rotation);
 }
 
-@function placeholder($color: #DDD) {
+@mixin placeholder($color: #DDD) {
 	:-moz-placeholder {
 		color: $color;
 	}
@@ -59,7 +59,7 @@
 		background-image: -ms-linear-gradient(left, $start-color 0%, $end-color 100%);  /* IE10+ */
 		background-image: linear-gradient(left, $start-color, $end-color); /* the standard */
 
-		@if $disable-filters == false {
+		@if not $disable-filters {
 			filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",$start-color,$end-color)); /* IE6 & IE7 */
 			-ms-filter: %("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",$start-color,$end-color); /* IE8+ */			
 		}
@@ -108,14 +108,14 @@
 }
 
 @mixin inline-block() {
-	@if $using-ieclasses == true {
+	@if $using-ieclasses {
 		display: inline-block;
 		.ie7 & {
 			display: inline;
 			zoom: 1;
 		}
 
-	@if$using-ieclasses == false {
+	@if not $using-ieclasses {
 		display: inline-block;
 		*display: inline;
 		*zoom: 1;
@@ -171,25 +171,25 @@
 
 // System --------------------------------
 
-@function nudge-l($pos) {
+@mixin nudge-l($pos) {
 	@if $pos > 0 {
 		left: $pos;
 	}
 }
 
-@function nudge-r($pos) {
+@mixin nudge-r($pos) {
 	@if $pos > 0 {
 		right: $pos;
 	}
 }
 
-@function nudge-t($pos) {
+@mixin nudge-t($pos) {
 	@if $pos > 0 {
 		top: $pos;
 	}
 }
 
-@function nudge-b($pos) {
+@mixin nudge-b($pos) {
 	@if $pos > 0 {
 		bottom: $pos;
 	}
