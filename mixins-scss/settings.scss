@@ -6,9 +6,10 @@
 
 // General --------------------------------
 
-$using-ieclasses: true;		// whether or not the markup has html5-boilerplate style IE classes in it or not
-$using-modernizr: false; 	// whether or not modernizer feature-detection classes are being used
-$disable-filters: true; 	// whether or not to disable MS-specific 'filter' properties (can make IE slow!)
+$using-ieclasses: true;								// whether or not the markup has html5-boilerplate style IE classes in it or not
+$using-modernizr: true; 							// whether or not modernizer feature-detection classes are being used
+$disable-filters: true; 							// whether or not to disable MS-specific 'filter' properties (can make IE slow!)
+$prefixes: ("-webkit", "-moz", "-ms", "-o",  ""); 	// specify vendor-specific prefixes to use with CSS3 properties
 
 // Typography --------------------------------
 
