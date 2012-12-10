@@ -4,8 +4,8 @@
 
 @mixin font-size-rems($px-size){
 	$rem-size: $px-size / $base-font-size;
-	font-size: "#{px-size}px"; 
-	font-size: "#{rem-size}rem";
+	font-size: "#{$px-size}px"; 
+	font-size: "#{$rem-size}rem";
 }
 
 @mixin font-size-ems($target-px-size, $context-px-size:$base-font-size) {
