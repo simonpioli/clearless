@@ -13,7 +13,14 @@ $prefixes: ("-webkit", "-moz", "-ms", "-o",  ""); 	// specify vendor-specific pr
 
 // Typography --------------------------------
 
-$base-font-size: 16; 		// base pixel font size. Used as a default for px -> (r)em conversions
+$base-font-size: 16; 		                         // base pixel font size. Used as a default for px -> (r)em conversions
+$base-line-height: 1.5;                              // base line-height in em relative to base-font-size. Used to calculate baseline grid
+
+$baseline: ($base-font-size * $base-line-height);    // used for baseline background mixin baseline
+$showbl: true;                                       // change to false for deployment, useful if you forget to remove the mixin from your actual styles...
+
+$sans-serif:        Helvetica, Arial, sans-serif;
+$serif:             Baskerville,'Goudy Old Style',Palatino,'Book Antiqua',serif;
 
 // Sprites --------------------------------
 
