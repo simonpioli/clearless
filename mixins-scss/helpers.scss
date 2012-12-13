@@ -4,10 +4,13 @@
 
 // Shortcuts --------------------------------
 
-@mixin border-radius($radius:5px) {
-    -webkit-border-radius: $radius;
-	-moz-border-radius: $radius;
-	border-radius: $radius;
+@mixin border-radius($radius: 5px) {
+	// prefixes are defined in the settings
+  @each $prefix in $prefixes {
+    #{$prefix}-border-radius: $radius;
+  }
+
+  border-radius: $radius;
 }
 
 @mixin box-sizing($type: border-box) {
@@ -18,15 +21,21 @@
 }
 
 @mixin box-shadow($shadow: 1px 1px 2px rgba(0,0,0,0.25)) {
-	-webkit-box-shadow: $shadow;
-	-moz-box-shadow: $shadow;
-	box-shadow: $shadow;
+	// prefixes are defined in the settings
+  @each $prefix in $prefixes {
+    #{$prefix}-box-shadow: $shadow;
+  }
+
+  box-shadow: $shadow;
 }
 
 @mixin transition($transition) {
-	-webkit-transition: $transition;
-	-moz-transition: $transition;
-	transition: $transition;
+	// prefixes are defined in the settings
+  @each $prefix in $prefixes {
+    #{$prefix}-transition: $transition;
+  }
+
+  transition: $transition;
 }
 
 @mixin rotate($rotation) {
