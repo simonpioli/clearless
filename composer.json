@@ -1,7 +1,7 @@
 {
-    "name": "clearleft/clearless",
-    "description": "A collection of reusable LESS mixins",
-    "homepage": "https://github.com/clearleft/clearless",
+    "name": "simonpioli/clearless",
+    "description": "A collection of reusable SCSS mixins",
+    "homepage": "https://github.com/simonpioli/clearless",
     "type": "library",
     "license": "MIT",
     "version": "dev",
