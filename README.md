@@ -1,9 +1,9 @@
-ClearLess
-=========
+ClearlySASS
+===========
 
-A reuseable collection of carefully-considered [Less](http://lesscss.org/) mixins, or *YALML* (Yet Another Less Mixin Library).
+A redeveloped, reusable collection of carefully-considered [SCSS](http://sass-lang.com/) mixins, or *YALML* (Yet Another Less Mixin Library).
 
-The core tenets of this mixin library are to *avoid output bloat wherever possible* (via duplicated properties etc) and to *provide flexibile, configurable solutions* to the problems that are addressed by the library (i.e. by using Modernizr classes, browser hacks or not, etc). The aim is to give the author the benefits of reusable shortcuts without obliterating personal style and generating bloated stylesheets.
+In keeping with the original Less version by [ClearLeft](http://clearleft.com/), the core tenets of this mixin library are to *avoid output bloat wherever possible* (via duplicated properties etc) and to *provide flexibile, configurable solutions* to the problems that are addressed by the library (i.e. by using Modernizr classes, browser hacks or not, etc). The aim is to give the author the benefits of reusable shortcuts without obliterating personal style and generating bloated stylesheets.
 
 **Before diving in** it is strongly recommended that you peruse the [notes on usage and best practices](#some-notes-on-usage-and-best-practices) at the end of this document, which gives an overview of how you can take full advantage of ClearLess without compromising the generated CSS output.
 
@@ -27,23 +27,23 @@ The `mixins/all.less` file itself simply imports all the individual Less files i
 Global settings
 ---------------
 
-ClearLess defines a few settings that affect the output of some of the mixins. These are just [Less variables](http://lesscss.org/#-variables), and have their default values defined in `mixins/settings.less`.
+ClearlySASS defines a few settings that affect the output of some of the mixins. These are just [SASS variables](http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#variables_), and have their default values defined in `mixins/settings.scss`.
 
 To override the defaults, simply redefine them after importing the mixins:
 
 ```css
 @import "mixins/all";
 
-@using-modernizr: true;
-@base-font-size: 14;
+$using-modernizr: true;
+$base-font-size: 14;
 ```
 
 The following global settings are defined:
 
-### SETTING: @using-modernizr
+### SETTING: $using-modernizr
 
 ```css
-@using-modernizr: false;
+$using-modernizr: false;
 ```
 
 If using Modernizr, some of the mixins will swap to using the Modernizr-generated classes to determine support for various features and thus what CSS to generate (see the icon/sprites mixins for an example). Set this to `true` to enable this behaviour.
@@ -52,18 +52,18 @@ Modernizr feature tests currently used (if using a custom Modernizr build):
 
 * Generated Content (`.generatedcontent`)
 
-### SETTING: @using-ieclasses
+### SETTING: $using-ieclasses
 
 ```css
-@using-ieclasses: true;
+$using-ieclasses: true;
 ```
 
 If using [H5BP](http://html5boilerplate.com/)-style conditional comments to add IE-indentifying classes to the HTML element, some mixins will use them to patch IE support where there are known issues. If this is set to `false` then these mixins will fall back to hacks like the [star hack](http://en.wikipedia.org/wiki/CSS_filter#Star_hack) to provide this support instead.
 
-### SETTING: @disable-filters
+### SETTING: $disable-filters
 
 ```css
-@disable-filters: true;
+$disable-filters: true;
 ```
 
 Whether or not certain mixins (like the gradient mixins) should generate IE fallbacks using the MS proprietary `filter` property or not. Disabled by default due to performance issues with filter props.
@@ -75,18 +75,18 @@ Resets
 
 Convinience mixins that should be used *outside of element selectors* as a quick way to generate popular reset stylesheet contents.
 
-### .reset;
+### reset;
 
 ```css
-.reset();
+reset();
 ```
 
 Outputs styles from the '[Meyer Reset](http://meyerweb.com/eric/tools/css/reset/)'.
 
-### .normalize;
+### normalize;
 
 ```css
-.normalize();
+normalize();
 ```
 
 Outputs styles from [normalize.css](http://necolas.github.com/normalize.css/).
@@ -95,40 +95,39 @@ Outputs styles from [normalize.css](http://necolas.github.com/normalize.css/).
 Shortcuts & Helpers
 -------------------
 
-These are the most basic mixins. *Shortcuts* typically provide a quick way to generate all the required vendor-prefixed versions of a property, and/or give a more manageable syntax for defining things like CSS gradients. *Helpers* are mixins that typically generate boilerplate code for common use cases, such as `display: inline-block;` statements with IE7 fixes, or image replacement code.
+These are the most basic mixins and functions. *Shortcuts* typically provide a quick way to generate all the required vendor-prefixed versions of a property, and/or give a more manageable syntax for defining things like CSS gradients. *Helpers* are mixins that typically generate boilerplate code for common use cases, such as `display: inline-block;` statements with IE7 fixes, or image replacement code.
 
-* [.border-radius()](#border-radius)
-* [.box-sizing()](#box-sizing)
-* [.box-shadow()](#box-shadow)
-* [.transition()](#transition)
-* [.rotate()](#rotate)
-* [.placeholder()](#placeholder)
-* [#gradient > .vertical()](#gradient--vertical)
-* [#gradient > .horizontal()](#gradient--horizontal)
-* [.clearfix()](#clearfix)
-* [.inline-block()](#inline-block)
-* [.ir()](#ir)
-* [.hidden()](#hidden)
-* [.visually-hidden()](#visually-hidden)
-* [.size()](#size)
+* [border-radius()](#border-radius)
+* [box-sizing()](#box-sizing)
+* [box-shadow()](#box-shadow)
+* [transition()](#transition)
+* [rotate()](#rotate)
+* [placeholder()](#placeholder)
+* [gradient()](#gradient)
+* [clearfix()](#clearfix)
+* [inline-block()](#inline-block)
+* [ir()](#ir)
+* [hidden()](#hidden)
+* [visually-hidden()](#visually-hidden)
+* [size()](#size)
 
-### .border-radius()
+### @mixin border-radius()
 
 Generates a `box-radius` property with the appropriate vendor prefixes.
 
 ```css
-.border-radius( <@radius> );
+@include border-radius(<$radius>);
 ```
 
-* `@radius`: *(Optional)* Radius to round all corners to. Defaults to `5px`.
+* `$radius`: *(Optional)* Radius to round all corners to. Defaults to `5px`.
 
 ```css
 /* Usage: */
 .example1 {
-	.border-radius( 5px );
+	@include border-radius(5px);
 }
 .example2 {
-	.border-radius( 5px 7px 5px 10px );
+	@include border-radius(5px 7px 5px 10px);
 }
 /* Example output: */
 .example1 {
@@ -143,20 +142,20 @@ Generates a `box-radius` property with the appropriate vendor prefixes.
 }
 ```
 
-### .box-sizing()
+### @mixin box-sizing()
 
 Generates a `box-sizing` property with the appropriate vendor prefixes.
 
 ```css
-.box-sizing( [<@type>] );
+@mixin box-sizing([<$type>]);
 ```
 
-* `@type`: *(Optional)* box-sizing property value. Defaults to `border-box`.
+* `$type`: *(Optional)* box-sizing property value. Defaults to `border-box`.
 
 ```css
 /* Usage: */
 .example {
-	.box-sizing( border-box );
+	@include box-sizing(border-box);
 }
 /* Example output: */
 .example {
@@ -167,20 +166,20 @@ Generates a `box-sizing` property with the appropriate vendor prefixes.
 }
 ```
 
-### .box-shadow()
+### @mixin box-shadow()
 
 Generates a `box-shadow` property with the appropriate vendor prefixes.
 
 ```css
-.box-shadow( [<@shadow>] );
+@include box-shadow([<$shadow>]);
 ```
 
-* `@shadow`: *(Optional)* box-shadow property value. Defaults to `1px 1px 2px rgba(0,0,0,0.25)`.
+* `$shadow`: *(Optional)* box-shadow property value. Defaults to `1px 1px 2px rgba(0,0,0,0.25)`.
 
 ```css
 /* Usage: */
 .example {
-	.box-shadow( 2px 2px 3px #999 );
+	.box-shadow(2px 2px 3px #999);
 }
 /* Example output: */
 .example {
@@ -190,20 +189,20 @@ Generates a `box-shadow` property with the appropriate vendor prefixes.
 }
 ```
 
-### .transition()
+### @mixin transition()
 
 Generates a `transition` property with the appropriate vendor prefixes.
 
 ```css
-.transition( <@transition> );
+@include transition(<$transition>);
 ```
 
-* `@transition`: transition property value.
+* `$transition`: transition property value.
 
 ```css
 /* Usage: */
 .example {
-	.transition( all .2s ease-in-out );
+	@include transition(all .2s ease-in-out);
 }
 /* Example output: */
 .example {
@@ -213,20 +212,20 @@ Generates a `transition` property with the appropriate vendor prefixes.
 }
 ```
 
-### .rotate()
+### @mixin rotate()
 
 Generates a `transform` property with a rotation value and with the appropriate vendor prefixes.
 
 ```css
-.rotate( <@rotation> );
+@include rotate(<$rotation>);
 ```
 
-* `@rotation`: rotation value.
+* `$rotation`: rotation value.
 
 ```css
 /* Usage: */
 .example {
-	.rotate( 2.5deg );
+	@include rotate(2.5deg);
 }
 /* Example output: */
 .example {
@@ -237,19 +236,19 @@ Generates a `transform` property with a rotation value and with the appropriate 
 }
 ```
 
-### .placeholder()
+### @function placeholder()
 
 Generates pseudo-selector rules to globally change the colour of placeholder text for inputs. Use outside of element selectors.
 
 ```css
-.placeholder( [<@color>] );
+placeholder([<$color>]);
 ```
 
-* `@color`: *(Optional)* colour value. Defaults to `#DDD`
+* `$color`: *(Optional)* colour value. Defaults to `#DDD`
 
 ```css
 /* Usage: */
-.placeholder( #F00 );
+.placeholder(#F00);
 /* Example output: */
 :-moz-placeholder {
 	color: #F00;
@@ -259,21 +258,22 @@ Generates pseudo-selector rules to globally change the colour of placeholder tex
 }
 ```
 
-### #gradient > .vertical()
+### #gradient
 
-Uses CSS3 gradient values to generate vertical background gradients with appropriate vendor prefixed implementations. Output varies according to the value of the `@disable-filters` setting.
+Uses CSS3 gradient values to generate horizontal or vertical background gradients with appropriate vendor prefixed implementations. Output varies according to the value of the `$disable-filters` setting.
 
 ```css
-#gradient > .vertical( <@start-color>, <@end-color> );
+@mixin gradient([<$orientation>], [<$start-color>], [<$end-color>]);
 ```
 
+* `$orientation`: String value to set orientation.
 * `@start-color`: Colour value for the upper start colour.
 * `@end-color`: Colour value for the bottom end colour.
 
 ```css
 /* Usage: */
 .example {
-	#gradient > .vertical( #F00, #555);
+	#gradient('vertical', #F00, #555);
 }
 /* Example output: */
 .example {
@@ -289,49 +289,18 @@ Uses CSS3 gradient values to generate vertical background gradients with appropr
 }
 ```
 
-### #gradient > .horizontal()
-
-Uses CSS3 gradient values to generate horizontal background gradients with appropriate vendor prefixed implementations. Output varies according to the value of the `@disable-filters` setting.
-
-```css
-#gradient > .horizontal( <@start-color>, <@end-color> );
-```
-
-* `@start-color`: Colour value for the left start colour.
-* `@end-color`: Colour value for the right end colour.
-
-```css
-/* Usage: */
-.example {
-	#gradient > .horizontal( #F00, #555);
-}
-/* Example output: */
-.example {
-	background-color: #555;
-	background-repeat: repeat-x;
-	background-image: -khtml-gradient(linear, left top, right top, from(#F00), to(#555));
-	background-image: -moz-linear-gradient(left, #F00, #555);
-	background-image: -ms-linear-gradient(left, #F00, #555);
-	background-image: -webkit-gradient(linear, left top, right top, color-stop(0%, #F00), color-stop(100%, #555));
-	background-image: -webkit-linear-gradient(left, #F00, #555);
-	background-image: -o-linear-gradient(left, #F00, #555);
-	background-image: -ms-linear-gradient(left, #F00 0%, #555 100%);
-	background-image: linear-gradient(left, #F00, #555);
-}
-```
-
 ### .clearfix()
 
 Generates the appropriate properies to apply the [micro-clearfix hack](http://nicolasgallagher.com/micro-clearfix-hack/) to the element. Output varies according to the value of the `@using-ieclasses` setting.
 
 ```css
-.clearfix();
+@include clearfix();
 ```
 
 ```css
 /* Usage: */
 .example {
-	.clearfix();
+	@include clearfix();
 }
 /* Example output: */
 .example:before,
@@ -348,18 +317,18 @@ Generates the appropriate properies to apply the [micro-clearfix hack](http://ni
 }
 ```
 
-### .inline-block()
+### @mixin inline-block()
 
 Helper to generate the inline-block display property plus fixes for IE7. Output varies according to the value of the `@using-ieclasses` setting.
 
 ```css
-.inline-block();
+@include inline-block();
 ```
 
 ```css
 /* Usage: */
 .example {
-	.inline-block();
+	@include inline-block();
 }
 /* Example output: */
 .example {
@@ -373,18 +342,18 @@ Helper to generate the inline-block display property plus fixes for IE7. Output 
 ```
 
 
-### .ir()
+### @mixin ir()
 
 Generates text-removing properties for use in image replacement. Does not specify the background image (or it's positioning) itself - this needs to be specified manually (or use one of the sprite mixins, if appropriate).
 
 ```css
-.ir();
+@include ir();
 ```
 
 ```css
 /* Usage: */
 .example {
-	.ir();
+	@include ir();
 	background-image: url('/text.png');
 }
 /* Example output: */
@@ -397,18 +366,18 @@ Generates text-removing properties for use in image replacement. Does not specif
 	background-image: url('/text.png');
 }
 ```
-### .hidden()
+### @mixin hidden()
 
 Hides content from the page. Uses `!important` to override inline-styles added by JS.
 
 ```css
-.hidden();
+@include hidden();
 ```
 
 ```css
 /* Usage: */
 .example {
-	.hidden();
+	@include hidden();
 }
 /* Example output: */
 .example {
@@ -417,18 +386,18 @@ Hides content from the page. Uses `!important` to override inline-styles added b
 }
 ```
 
-### .visually-hidden()
+### @mixin visually-hidden()
 
 Hides content visually, but leaves is accessible to screenreaders. Also generates helper classes to allow the element to be focusable when navigated to via the keyboard.
 
 ```css
-.visually-hidden();
+@include visually-hidden();
 ```
 
 ```css
 /* Usage: */
 .example {
-	.visually-hidden();
+	@include visually-hidden();
 }
 /* Example output: */
 .example {
@@ -452,30 +421,25 @@ Hides content visually, but leaves is accessible to screenreaders. Also generate
 }
 ```
 
-### .size()
+### @mixin size()
 
 Shortcut for generating width and height properties.
 
 ```css
-.size( <@size> );
+.size([<$thesize>], [<$width>], [<$height>]);
 ```
 
-* `@size`: Value to use for the height and width properties.
-
-```css
-.size( <@width>, <@height> );
-```
-
-* `@width`: Value to use for the width property
-* `@height`: Value to use for the height property
+* `$size`: Value to use for the height and width properties.
+* `$width`: Value to use for the width property
+* `$height`: Value to use for the height property
 
 ```css
 /* Usage: */
 .example1 {
-	.size( 30px );
+	@include size(30px);
 }
 .example2 {
-	.size( 20px, 70px );
+	@include size(0, 20px, 70px);
 }
 /* Example output: */
 .example1 {
@@ -491,14 +455,14 @@ Shortcut for generating width and height properties.
 Typography
 -------
 
-* [@base-font-size](#setting-base-font-size)
+* [$base-font-size](#setting-base-font-size)
 * [.font-size-ems()](#font-size-ems)
 * [.font-size-rems()](#font-size-rems)
 * [.word-wrap()](#word-wrap)
 
-### SETTING: @base-font-size
+### SETTING: $base-font-size
 
-`@base-font-size: 16;`
+`$base-font-size: 16;`
 
 A variable to sets the base font-size (in pixels) that is used as the default in certain calculations (such as in the pixels to rems conversion helper). Units should be omited.
 
