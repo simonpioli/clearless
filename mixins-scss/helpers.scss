@@ -57,6 +57,7 @@
 
   transform: scale($scale) rotate($rotate) translate($trans-x, $trans-y) skew($skew-x, $skew-y);
 
+  //Forces 3D for rotate, makes for smoother edges
   @if $rotate > 0 {
     -webkit-backface-visibility: hidden;
   }
@@ -149,7 +150,7 @@
 }
 
 @mixin ir() {
-	text-indent: 100%;
+	text-indent: 200%;
 	white-space: nowrap;
 	overflow: hidden;
 }
