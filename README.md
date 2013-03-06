@@ -1,18 +1,18 @@
 ClearlySASS
 ===========
 
-A redeveloped, reusable collection of carefully-considered [SCSS](http://sass-lang.com/) mixins, or *YALML* (Yet Another Less Mixin Library).
+A redeveloped, reusable collection of carefully-considered [SCSS](http://sass-lang.com/) mixins, or *YASML* (Yet Another Sass Mixin Library).
 
 In keeping with the original Less version by [ClearLeft](http://clearleft.com/), the core tenets of this mixin library are to *avoid output bloat wherever possible* (via duplicated properties etc) and to *provide flexibile, configurable solutions* to the problems that are addressed by the library (i.e. by using Modernizr classes, browser hacks or not, etc). The aim is to give the author the benefits of reusable shortcuts without obliterating personal style and generating bloated stylesheets.
 
-**Before diving in** it is strongly recommended that you peruse the [notes on usage and best practices](#some-notes-on-usage-and-best-practices) at the end of this document, which gives an overview of how you can take full advantage of ClearLess without compromising the generated CSS output.
+**Before diving in** it is strongly recommended that you peruse the [notes on usage and best practices](#some-notes-on-usage-and-best-practices) at the end of this document, which gives an overview of how you can take full advantage of ClearlySASS without compromising the generated CSS output.
 
 Usage
 -----
 
-Simply `@import` the `mixins/all.less` file into the top of your main Less file, and then (optionally) override any of the settings as described below.
+Simply `@import` the `mixins-scss/all.scss` file into the top of your main Less file, and then (optionally) override any of the settings as described below.
 
-The `mixins/all.less` file itself simply imports all the individual Less files into one place. The mixins and settings for these individual files are documented under in their various groupings below:
+The `mixins-scss/all.scss` file itself simply imports all the individual Less files into one place. The mixins and settings for these individual files are documented under in their various groupings below:
 
 * [Settings](#global-settings)
 * [Resets](#resets)
@@ -112,8 +112,9 @@ These are the most basic mixins and functions. *Shortcuts* typically provide a q
 * [size()](#size)
 
 ### @mixin border-radius()
+=======
 
-Generates a `box-radius` property with the appropriate vendor prefixes.
+Generates a `border-radius` property with the appropriate vendor prefixes.
 
 ```css
 @include border-radius(<$radius>);
@@ -189,7 +190,33 @@ Generates a `box-shadow` property with the appropriate vendor prefixes.
 }
 ```
 
+### .filter()
+
+Generates a `filter` property with the appropriate vendor prefixes.
+
+```css
+.filter( [<@filter>] );
+```
+
+* `@filter`: *(Optional)* filter property value. Defaults to `grayscale(100%)`.
+
+```css
+/* Usage: */
+.example {
+	.filter( sepia(50%) );
+}
+/* Example output: */
+.example {
+	-webkit-filter: sepia(50%);
+	-moz-filter: sepia(50%);
+	-ms-filter: sepia(50%);
+	-o-filter: sepia(50%);
+	filter: sepia(50%);
+}
+```
+
 ### @mixin transition()
+=======
 
 Generates a `transition` property with the appropriate vendor prefixes.
 
