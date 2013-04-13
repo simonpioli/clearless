@@ -39,22 +39,26 @@
 	margin: 0 0 #{$old-line-height}px;
 }
 
-@mixin font-feature-settings($discretionary: true, $oldff: true){
-	$ligs: "liga", "dlig";
-	$oldff: "liga=1, dlig=1";
-
-	@if $discretionary == false {
-		$ligs: "liga";
-		$oldff: "liga=1";
-	}
+/*
+---
+Font Features
+---
+Common ligatures	             "liga"
+Discretionary ligatures	         "dlig"
+Small caps	                     "smcp"
+Lining numerals                  "lnum"
+Old-style numerals	             "onum"
+Swash alternates (index number)	 "swsh" n
+Styleset (01–20)	             "ss01–20"
+*/
+@mixin font-feature-settings($features: (liga, dlig), $oldff: true){
+	
+	$oldff: "liga=1, dlig=1, onum=1";
 
 	@if $oldff != false {
 		-moz-font-feature-settings: $oldff;
 	}
 	
-	@each $prefix in $prefixes {
-		#{$prefix}-font-feature-settings: $setting;
-	}
+	@include experimental(font-feature-settings, $ligs, -moz, -webkit, -o, -ms, not -khtml, official);
 
-    font-feature-settings: $setting;
 }
